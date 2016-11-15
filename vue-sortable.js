@@ -13,20 +13,22 @@
   vSortable.config = {}
 
   vSortable.install = function (Vue) {
-    Vue.directive('sortable', function (el, options) {
-      options = options || {}
+    Vue.directive('sortable',{
+      bind: function (el, binding, vnode) {
+        var options = binding.value || {}
 
-      var sortable = new Sortable(el, options)
+        var sortable = new Sortable(el, options)
 
-      if (this.arg && !this.vm.sortable) {
-        this.vm.sortable = {}
-      }
+        if (this.arg && !this.vm.sortable) {
+          this.vm.sortable = {}
+        }
 
-      //  Throw an error if the given ID is not unique
-      if (this.arg && this.vm.sortable[this.arg]) {
-        console.warn('[vue-sortable] cannot set already defined sortable id: \'' + this.arg + '\'')
-      } else if( this.arg ) {
-        this.vm.sortable[this.arg] = sortable
+        //  Throw an error if the given ID is not unique
+        if (this.arg && this.vm.sortable[this.arg]) {
+          console.warn('[vue-sortable] cannot set already defined sortable id: \'' + this.arg + '\'')
+        } else if( this.arg ) {
+          this.vm.sortable[this.arg] = sortable
+        }
       }
     })
   }
